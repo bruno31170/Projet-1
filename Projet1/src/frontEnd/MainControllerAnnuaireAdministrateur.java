@@ -42,6 +42,8 @@ public class MainControllerAnnuaireAdministrateur implements Initializable {
 	@FXML
 	private Button btnSupprimer;
 	@FXML
+	private Button btnRetour;
+	@FXML
 	private TableView<Stagiaire> tbStagiaire;
 	@FXML
 	private TableColumn<Stagiaire, String> colNom;
@@ -79,7 +81,8 @@ public class MainControllerAnnuaireAdministrateur implements Initializable {
 					recherche();
 					afficherRecherche();
 				}
-			
+			} else if (event.getSource() == btnRetour) {
+				afficherStagiaire();
 			}
 	
 			
@@ -154,7 +157,7 @@ public class MainControllerAnnuaireAdministrateur implements Initializable {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 
@@ -247,6 +250,7 @@ public class MainControllerAnnuaireAdministrateur implements Initializable {
 			reverseList.add(split[1] + " " + split[0]);
 				
 			}
+		System.out.println(reverseList);
 		return reverseList;
 		}
 	
@@ -254,7 +258,7 @@ public class MainControllerAnnuaireAdministrateur implements Initializable {
 		List<String> fichier = reverseList();
 		List<String> result = fichier.stream()
 				
-				.filter(line -> line.startsWith(tfPrenom.getText().toUpperCase()))
+				.filter(line -> line.startsWith(tfPrenom.getText()))
 				.collect(Collectors.toList());
 		System.out.println(result);
 		return result;

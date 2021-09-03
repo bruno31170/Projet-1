@@ -38,6 +38,8 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 	@FXML
 	private Button btnRechercher;
 	@FXML
+	private Button btnRetour;
+	@FXML
 	private TableView<Stagiaire> tbStagiaire;
 	@FXML
 	private TableColumn<Stagiaire, String> colNom;
@@ -113,14 +115,25 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			ajouterStagiaire();
 			afficherStagiaire();
 		}
-		else if (event.getSource() == btnRechercher) {
+	
+	 else if (event.getSource() == btnRechercher) {
+		
+		if (tfNom.getText().isEmpty()  && tfPrenom.getText() != null) {
+			recherchePrenom();
+			afficherRecherchePrenom();
 			
-			getStagiaireRecherche();
+		} else if (tfPrenom.getText().isEmpty() && tfNom.getText() != null){
+			recherche();
 			afficherRecherche();
 		}
-		
+	}	else if (event.getSource() == btnRetour) {
+		afficherStagiaire();
 	}
 	
+	}
+
+
+
 	//getStagiaire
 	public ObservableList<Stagiaire> getStagiaire () {
 		
@@ -199,6 +212,67 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 	}
 		
 
+	public List<String> reverseList() {
+		String split[];
+		List<String> fichier = lireFichier();
+		List<String> reverseList = new ArrayList<>();
+		for (String line : fichier) {
+			split = line.split(" ");
+			reverseList.add(split[1] + " " + split[0]);
+				
+			}
+		System.out.println(reverseList);
+		return reverseList;
+		}
+	
+	
+	
+	public List<String> recherchePrenom() {
+		List<String> fichier = reverseList();
+		List<String> result = fichier.stream()
+				
+				.filter(line -> line.startsWith(tfPrenom.getText()))
+				.collect(Collectors.toList());
+		System.out.println(result);
+		return result;
+	}
+	
+	
+	
+	public ObservableList<Stagiaire> getStagiaireRecherchePrenom() {
+
+		ObservableList<Stagiaire> listStagiairePrenom = FXCollections.observableArrayList();
+		String[] split;
+
+		List<String> recherche = recherchePrenom();
+		for (String ligne : recherche) {
+			split = ligne.split(" ");
+
+			listStagiairePrenom.add(new Stagiaire(split[1], split[0]));
+		}
+
+		return listStagiairePrenom;
+
+	}
+	
+	
+	public void afficherRecherchePrenom() {
+
+		try {
+
+			colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
+
+			colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
+
+			tbStagiaire.setItems(getStagiaireRecherchePrenom());
+
+		} catch (NullPointerException e) {
+			System.out.println("Error" + e);
+		}
+	}
+	
+	
+	
 public void afficherRecherche() { 
 		
 		try {						
@@ -217,9 +291,9 @@ public void afficherRecherche() {
 		
 	
 
-
-	
 }
+	
+
 
 		
 	
