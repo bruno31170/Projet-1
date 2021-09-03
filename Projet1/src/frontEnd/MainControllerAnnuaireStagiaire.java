@@ -5,25 +5,26 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import backEnd.Personne;
 import backEnd.Stagiaire;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class MainControllerAnnuaireStagiaire {
+public class MainControllerAnnuaireStagiaire implements Initializable {
 
 	//Declaration
 	@FXML
@@ -37,14 +38,21 @@ public class MainControllerAnnuaireStagiaire {
 	@FXML
 	private Button btnRechercher;
 	@FXML
-	private TableView<Personne> tbStagiaire;
+	private TableView<Stagiaire> tbStagiaire;
 	@FXML
-	private TableColumn<Personne, String> colNom;
+	private TableColumn<Stagiaire, String> colNom;
 	@FXML
-	private TableColumn<Personne, String> colPrenom;
+	private TableColumn<Stagiaire, String> colPrenom;
 
 	
 
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		afficherStagiaire();
+	}
+	
+
+	
 	
 	//Methode ajouter
 	
@@ -65,6 +73,8 @@ public class MainControllerAnnuaireStagiaire {
 				bufferedWriter.newLine();
 			}
 
+			afficherStagiaire();
+			
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -89,6 +99,7 @@ public class MainControllerAnnuaireStagiaire {
 			e.printStackTrace();
 		}
 		
+		afficherStagiaire();
 		return fichier;																			// On retourne la liste
 		
 		
@@ -101,18 +112,20 @@ public class MainControllerAnnuaireStagiaire {
 		if (event.getSource() == btnAjouter) {
 			
 			ajouterStagiaire();
+			afficherStagiaire();
 		}
 		else if (event.getSource() == btnRechercher) {
 			
 			recherche();
+			afficherStagiaire();
 		}
 		
 	}
 	
 	//getStagiaire
-	public ObservableList<Personne> getStagiaire () {
+	public ObservableList<Stagiaire> getStagiaire () {
 		
-		ObservableList<Personne> listStagiaire = FXCollections.observableArrayList();														
+		ObservableList<Stagiaire> listStagiaire = FXCollections.observableArrayList();														
 		
 		String[] x;
 			
@@ -126,77 +139,48 @@ public class MainControllerAnnuaireStagiaire {
 				
 				
 				
-				listStagiaire.add(new Personne(x[0], x[1]));														
+				listStagiaire.add(new Stagiaire(x[0], x[1]));														
 			}
 
 		} catch (IOException e) {																
 			e.printStackTrace();
 		}
 		
-		System.out.println(listStagiaire);
 		return listStagiaire;																			
 		
 		
 	}
 	
-	
-	
-	
-	
 	//Methode afficher Stagiaire
 	
 	public void afficherStagiaire() { 
 		
-		TableView<Personne> table = new TableView<Personne>();
-	      final ObservableList<Personne> data = FXCollections.observableArrayList(
-	         new Personne("BOULET", "Bruno"),
-	         new Personne("TONY", "Cassis")
-	         
-	      );
-	      System.out.println(data);
-	      
-	      
-	      colNom.setCellValueFactory(new PropertyValueFactory<Personne,String>("nom"));
-
-	     
-	      colPrenom.setCellValueFactory(new PropertyValueFactory<Personne,String>("prenom"));
-	      		
-	      
-	      
-	      table.setItems(data);
-	      table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-	     // table.getColumns().addAll(colNom, colPrenom);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//List<Personne> list = this.getStagiaire();
+		try {
 			
-			//tbStagiaire.setItems(getStagiaire());
-		
-	      
-	      
-	        //TableView<Personne> table = new TableView <Personne>();
+			//List<Stagiaire> list = this.getStagiaire();
 			
 			
+					
 			
-			//colNom.setCellValueFactory(new PropertyValueFactory<Personne, String>("nom"));
+			colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
 			
-			//colPrenom.setCellValueFactory(new PropertyValueFactory<Personne, String>("prenom"));
+			colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
+			
+			tbStagiaire.setItems(getStagiaire());
+			
 			
 			//tbStagiaire.getColumns().addAll();
 			
 			//System.out.println(tbStagiaire);
+
 			
-			//tbStagiaire.getItems().clear();
-			//tbStagiaire.getItems().addAll(list);
+//			tbStagiaire.getItems().clear();
+//			tbStagiaire.getItems().addAll(list);
 			
+		} catch (NullPointerException e) {
+			System.out.println("Error" + e);
+
+		}
 		
 			
 }
@@ -205,11 +189,14 @@ public class MainControllerAnnuaireStagiaire {
 			public List<String> recherche(){ 
 				List<String> fichier = lireFichier(); 
 				List<String> result = fichier.stream()                
-						.filter(line -> line.startsWith(tfNom.getText()))     
+						.filter(line -> line.startsWith(tfNom.getText().toUpperCase()))     
 						.collect(Collectors.toList());              
 					System.out.println(result);
 				return result;
 			}
+			
+			
+		
 }
 
 
