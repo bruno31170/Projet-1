@@ -48,6 +48,7 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		afficherStagiaire();
 	}
 	
@@ -210,10 +211,11 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 		return listStagiaire;
 		
 	}
-			
-public void afficherStagiaireRecherche() { 
 		
-		try {
+}
+//public void afficherStagiaireRecherche() { 
+//		
+//		try {
 			
 			//List<Stagiaire> list = this.getStagiaire();
 			
@@ -241,7 +243,6 @@ public void afficherStagiaireRecherche() {
 //		}
 		
 	
-}		
-}
+//}		
 
 
