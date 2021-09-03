@@ -48,7 +48,7 @@ public class MainControllerConnexion implements Initializable{
 
 		if (event.getSource() == btnConnexion) {
 
-			if (connexion()== true) {
+			if (connexion()== 1) {
 			Parent root = FXMLLoader.load(getClass().getResource("InterfaceAnnuaireStagiaire.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
@@ -56,6 +56,16 @@ public class MainControllerConnexion implements Initializable{
 			stage.show();
 			personne.afficherStagiaire();
 			}
+			
+			else if (connexion()== 2) {
+				Parent root = FXMLLoader.load(getClass().getResource("InterfaceAnnuaireAdministrateur.fxml"));
+				stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+				scene = new Scene(root);
+				stage.setScene(scene);
+				stage.show();
+				personne.afficherStagiaire();
+				}
+			
 			else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("INFORMATION");
@@ -80,39 +90,27 @@ public class MainControllerConnexion implements Initializable{
 	
 	//Methode connexion
 	
-	public boolean connexion() {
+	public int connexion() {
 
-		HashMap<String, String> identifient = new HashMap<String, String>();
+		HashMap<String, String> user = new HashMap<String, String>();
+		HashMap<String, String> admin = new HashMap<String, String>();
 
-		identifient.put("user", "user1");
-		identifient.put("admin", "admin1");
+		user.put("user", "user1");
+		admin.put("admin", "admin1");
 
-		if (identifient.containsKey(tfIdentifiant.getText())) {
-
-
-			if (identifient.get(tfIdentifiant.getText()).equals(tfMotDePasse.getText())) {
-
+		if (user.containsKey(tfIdentifiant.getText()) && user.get(tfIdentifiant.getText()).equals(tfMotDePasse.getText())) {
+				return 1;}
 				
-				return true;
+		if (admin.containsKey(tfIdentifiant.getText()) && admin.get(tfIdentifiant.getText()).equals(tfMotDePasse.getText())){
+					return 2;}
 
-			}else {
+		 else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("INFORMATION");
-				alert.setContentText("Mauvais mot de passe ");
+				alert.setContentText("Identifiant ou mot de passe incorrect");
 				alert.show();
-				
-				return false;
-			}
-
-
-		}else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("INFORMATION");
-			alert.setContentText("Mauvais identifiant ");
-			alert.show();
-			
-			return false;
-		}
-	}
+				return 3;
+		 }
+}
 }
 

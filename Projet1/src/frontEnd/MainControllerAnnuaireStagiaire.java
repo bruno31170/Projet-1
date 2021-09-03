@@ -74,7 +74,6 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 				bufferedWriter.newLine();
 			}
 
-			afficherStagiaire();
 			
 		} catch (IOException e) {
 
@@ -100,7 +99,6 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			e.printStackTrace();
 		}
 		
-		afficherStagiaire();
 		return fichier;																			// On retourne la liste
 		
 		
@@ -117,9 +115,8 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 		}
 		else if (event.getSource() == btnRechercher) {
 			
-			rechercheToObject();
-			afficherStagiaire();
-			System.out.println(rechercheToObject());
+			getStagiaireRecherche();
+			afficherRecherche();
 		}
 		
 	}
@@ -156,10 +153,6 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 	public void afficherStagiaire() { 
 		
 		try {
-			
-			//List<Stagiaire> list = this.getStagiaire();
-			
-			
 					
 			
 			colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
@@ -167,15 +160,8 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
 			
 			tbStagiaire.setItems(getStagiaire());
-			
-			
-			//tbStagiaire.getColumns().addAll();
-			
-			//System.out.println(tbStagiaire);
+				
 
-			
-//			tbStagiaire.getItems().clear();
-//			tbStagiaire.getItems().addAll(list);
 			
 		} catch (NullPointerException e) {
 			System.out.println("Error" + e);
@@ -196,7 +182,7 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			}
 			
 			
-	public ObservableList<Stagiaire> rechercheToObject(){
+	public ObservableList<Stagiaire> getStagiaireRecherche(){
 		
 		ObservableList<Stagiaire> listStagiaire = FXCollections.observableArrayList();
 		String [] split;
@@ -207,42 +193,40 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			
 			listStagiaire.add(new Stagiaire(split[0], split[1]));
 		}
-		//System.out.println(listStagiaire);
+
 		return listStagiaire;
 		
 	}
 		
+
+public void afficherRecherche() { 
+		
+		try {						
+			
+		colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
+			
+		colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
+			
+			tbStagiaire.setItems(getStagiaireRecherche());	
+			
+		} catch (NullPointerException e) {
+			System.out.println("Error" + e);
+
+		}
 }
-//public void afficherStagiaireRecherche() { 
-//		
-//		try {
-			
-			//List<Stagiaire> list = this.getStagiaire();
-			
-//			
-//					
-//			
-//			colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
-//			
-//			colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
-//			
-//			tbStagiaire.setItems(RechercheToObject());
-//			
-//			
-//			//tbStagiaire.getColumns().addAll();
-//			
-//			//System.out.println(tbStagiaire);
-//
-//			
-////			tbStagiaire.getItems().clear();
-////			tbStagiaire.getItems().addAll(list);
-//			
-//		} catch (NullPointerException e) {
-//			System.out.println("Error" + e);
-//
-//		}
 		
 	
-//}		
+
+
+	
+}
+
+		
+	
+
+		
+		
+		
+
 
 
