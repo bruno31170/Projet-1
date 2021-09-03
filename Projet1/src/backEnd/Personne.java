@@ -13,8 +13,8 @@ public class Personne{
 	
 	public Personne(String nom, String prenom) {
 		super();
-		this.nom = new String(nom);
-		this.prenom = new String(prenom);
+		this.nom = nom;
+		this.prenom = prenom;
 	}
 	
 	
