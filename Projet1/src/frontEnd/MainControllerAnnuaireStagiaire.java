@@ -60,12 +60,12 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 
 		//Tri
 		List<String> fichier = lireFichier();				// On récupère la liste de la méthode lireFichier
-		System.out.println(fichier);
+		//System.out.println(fichier);
 		
 		fichier.add(tfNom.getText().toUpperCase() + " " + tfPrenom.getText());		// Il serait bon de forcer le prénom a avoir la 1ère lettre en majuscule
 		
 		Collections.sort(fichier);							// On met les éléments dans l'ordre
-		System.out.println(fichier);
+		//System.out.println(fichier);
 		try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("noms2.DON"))){	
 
 			for (String ligne : fichier) {
@@ -118,6 +118,7 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			
 			rechercheToObject();
 			afficherStagiaire();
+			System.out.println(rechercheToObject());
 		}
 		
 	}
@@ -205,13 +206,42 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			
 			listStagiaire.add(new Stagiaire(split[0], split[1]));
 		}
-		System.out.println(listStagiaire);
+		//System.out.println(listStagiaire);
 		return listStagiaire;
-		
 		
 	}
 			
+public void afficherStagiaireRecherche() { 
 		
+		try {
+			
+			//List<Stagiaire> list = this.getStagiaire();
+			
+//			
+//					
+//			
+//			colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
+//			
+//			colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
+//			
+//			tbStagiaire.setItems(RechercheToObject());
+//			
+//			
+//			//tbStagiaire.getColumns().addAll();
+//			
+//			//System.out.println(tbStagiaire);
+//
+//			
+////			tbStagiaire.getItems().clear();
+////			tbStagiaire.getItems().addAll(list);
+//			
+//		} catch (NullPointerException e) {
+//			System.out.println("Error" + e);
+//
+//		}
+		
+	
+}		
 }
 
 
