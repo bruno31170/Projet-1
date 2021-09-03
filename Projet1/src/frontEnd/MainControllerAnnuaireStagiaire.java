@@ -116,7 +116,7 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 		}
 		else if (event.getSource() == btnRechercher) {
 			
-			recherche();
+			rechercheToObject();
 			afficherStagiaire();
 		}
 		
@@ -136,8 +136,6 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 			while((line = bufferedReader.readLine()) != null) { 							
 				
 				x= line.split(" ");
-				
-				
 				
 				listStagiaire.add(new Stagiaire(x[0], x[1]));														
 			}
@@ -191,10 +189,27 @@ public class MainControllerAnnuaireStagiaire implements Initializable {
 				List<String> result = fichier.stream()                
 						.filter(line -> line.startsWith(tfNom.getText().toUpperCase()))     
 						.collect(Collectors.toList());              
-					System.out.println(result);
-				return result;
+					//System.out.println(result);
+				return result; 
 			}
 			
+			
+	public ObservableList<Stagiaire> rechercheToObject(){
+		
+		ObservableList<Stagiaire> listStagiaire = FXCollections.observableArrayList();
+		String [] split;
+		
+		List<String> recherche = recherche();
+		for (String ligne : recherche) {
+			split = ligne.split(" ");
+			
+			listStagiaire.add(new Stagiaire(split[0], split[1]));
+		}
+		System.out.println(listStagiaire);
+		return listStagiaire;
+		
+		
+	}
 			
 		
 }
